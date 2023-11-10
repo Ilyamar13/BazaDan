@@ -1,0 +1,33 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="style.css"> 
+    <title>Bookmark Manager</title> 
+</head> 
+<body> 
+    <div class="container"> 
+        <h1>Bookmark Manager</h1> 
+        <div class="bookmark-form"> 
+            <input type="text" id="websiteName" placeholder="Website Name"> 
+            <input type="url" id="websiteURL" placeholder="Website URL"> 
+            <select id="category"> 
+                <option value="Social network">Social network</option> 
+                <option value="Movies and series">Movies and series</option> 
+                <option value="Working links">Working links</option> 
+                <option value="Educational links">Educational links</option> 
+                <option value="Cooking recipes">Cooking recipes</option> 
+                <option value="Other">Other</option> 
+            </select> 
+                <button onclick="addBookmark()">Add Bookmark</button> 
+                <button onclick="searchBookmarksByCategory()">Search by Category</button> 
+                <h2>Saved Bookmarks</h2> 
+                <div id="bookmarks"></div>  
+            </div> 
+        </div> 
+    </div> 
+ 
+    <script src="script.js"></script> 
+</body> 
+</html>
