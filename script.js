@@ -191,3 +191,60 @@ function shareBookmark(name, url) {
         alert('Web Share API is not supported in this browser.');
     }
 }
+
+function addBookmark() {
+    const websiteName = document.getElementById("websiteName").value;
+    const websiteURL = document.getElementById("websiteURL").value;
+    const category = document.getElementById("category").value;
+
+    if (websiteName === "" || websiteURL === "") {
+        alert("Please fill in both website name and URL.");
+        return;
+    }
+
+    const bookmark = {
+        name: websiteName,
+        url: websiteURL,
+        category: category
+    };
+
+    // Retrieve existing bookmarks from localStorage or initialize an empty array
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    bookmarks.push(bookmark);
+
+    // Save the updated bookmarks array back to localStorage
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
+    // Display the updated bookmarks
+    displayBookmarks();
+    clearForm();
+}
+
+// Function to display bookmarks
+function displayBookmarks() {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const bookmarksContainer = document.getElementById("bookmarks");
+    bookmarksContainer.innerHTML = "";
+
+    bookmarks.forEach((bookmark, index) => {
+        const bookmarkElement = document.createElement("div");
+        bookmarkElement.classList.add("bookmark");
+        bookmarkElement.innerHTML = `
+            <h3>${bookmark.name}</h3>
+            <a href="${bookmark.url}" target="_blank">Visit</a>
+            <span>Category: ${bookmark.category}</span>
+            <button onclick="editBookmark(${index})">Edit</button>
+            <button onclick="deleteBookmark(${index})">Delete</button>
+        `;
+        bookmarksContainer.appendChild(bookmarkElement);
+    });
+}
+
+// Function to clear the form
+function clearForm() {
+    document.getElementById("websiteName").value = "";
+    document.getElementById("websiteURL").value = "";
+}
+
+// Initial display of bookmarks
+displayBookmarks();
