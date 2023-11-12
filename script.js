@@ -248,3 +248,15 @@ function clearForm() {
 
 // Initial display of bookmarks
 displayBookmarks();
+
+function toggleTheme() {
+    const currentTheme = document.getElementById("theme-stylesheet").getAttribute("href");
+    const themeToApply = currentTheme.includes("light.css") ? "dark.css" : "light.css";
+    
+    document.getElementById("theme-stylesheet").setAttribute("href", themeToApply);
+}
+
+// Your existing JavaScript code ...
+
+// Initial display of bookmarks
+displayBookmarks();
