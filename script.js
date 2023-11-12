@@ -178,42 +178,6 @@ function displayBookmarks(subset) {
     });
 }
 
-// Function to share a bookmark via Web Share API
-function displayBookmarks(subset) {
-    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-    const bookmarksContainer = document.getElementById("bookmarks");
-    bookmarksContainer.innerHTML = "";
-
-    const bookmarksToDisplay = subset ? subset : bookmarks;
-
-    bookmarksToDisplay.forEach((bookmark, index) => {
-        const bookmarkElement = document.createElement("div");
-        bookmarkElement.classList.add("bookmark");
-        bookmarkElement.innerHTML = `
-            <h3>${bookmark.name}</h3>
-            <a href="${bookmark.url}" target="_blank">Visit</a>
-            <span>Category: ${bookmark.category}</span>
-            <button onclick="editBookmark(${index})">Edit</button>
-            <button onclick="deleteBookmark(${index})">Delete</button>
-            <button onclick="shareBookmark('${bookmark.name}', '${bookmark.url}')">Share</button>
-        `;
-        bookmarksContainer.appendChild(bookmarkElement);
-    });
-}
-
-// Function to share a bookmark via Web Share API
-function shareBookmark(name, url) {
-    if (navigator.share) {
-        navigator.share({
-            title: name,
-            url: url,
-        })
-        .then(() => console.log('Successful share'))
-        .catch((error) => console.log('Error sharing', error));
-    } else {
-        alert('Web Share API is not supported in this browser.');
-    }
-}
 
 function addBookmark() {
     const websiteName = document.getElementById("websiteName").value;
@@ -339,3 +303,38 @@ function deleteBookmark(category, index) {
 // Initial display of bookmarks
 displayBookmarks();
 
+function displayBookmarks(subset) {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const bookmarksContainer = document.getElementById("bookmarks");
+    bookmarksContainer.innerHTML = "";
+
+    const bookmarksToDisplay = subset ? subset : bookmarks;
+
+    bookmarksToDisplay.forEach((bookmark, index) => {
+        const bookmarkElement = document.createElement("div");
+        bookmarkElement.classList.add("bookmark");
+        bookmarkElement.innerHTML = `
+            <h3>${bookmark.name}</h3>
+            <a href="${bookmark.url}" target="_blank">Visit</a>
+            <span>Category: ${bookmark.category}</span>
+            <button onclick="editBookmark(${index})">Edit</button>
+            <button onclick="deleteBookmark(${index})">Delete</button>
+            <button onclick="shareBookmark('${bookmark.name}', '${bookmark.url}')">Share</button>
+        `;
+        bookmarksContainer.appendChild(bookmarkElement);
+    });
+}
+
+// Function to share a bookmark via Web Share API
+function shareBookmark(name, url) {
+    if (navigator.share) {
+        navigator.share({
+            title: name,
+            url: url,
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    } else {
+        alert('Web Share API is not supported in this browser.');
+    }
+}
