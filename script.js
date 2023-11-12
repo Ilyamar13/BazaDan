@@ -219,7 +219,6 @@ function clearForm() {
 displayBookmarks();
 }
 
-
 function displayBookmarks(subset) {
     const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
     const bookmarksContainer = document.getElementById("bookmarks");
