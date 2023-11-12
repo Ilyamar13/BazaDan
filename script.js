@@ -179,6 +179,29 @@ function displayBookmarks(subset) {
 }
 
 // Function to share a bookmark via Web Share API
+function displayBookmarks(subset) {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
+    const bookmarksContainer = document.getElementById("bookmarks");
+    bookmarksContainer.innerHTML = "";
+
+    const bookmarksToDisplay = subset ? subset : bookmarks;
+
+    bookmarksToDisplay.forEach((bookmark, index) => {
+        const bookmarkElement = document.createElement("div");
+        bookmarkElement.classList.add("bookmark");
+        bookmarkElement.innerHTML = `
+            <h3>${bookmark.name}</h3>
+            <a href="${bookmark.url}" target="_blank">Visit</a>
+            <span>Category: ${bookmark.category}</span>
+            <button onclick="editBookmark(${index})">Edit</button>
+            <button onclick="deleteBookmark(${index})">Delete</button>
+            <button onclick="shareBookmark('${bookmark.name}', '${bookmark.url}')">Share</button>
+        `;
+        bookmarksContainer.appendChild(bookmarkElement);
+    });
+}
+
+// Function to share a bookmark via Web Share API
 function shareBookmark(name, url) {
     if (navigator.share) {
         navigator.share({
@@ -201,24 +224,6 @@ function addBookmark() {
         alert("Please fill in both website name and URL.");
         return;
     }
-
-    const bookmark = {
-        name: websiteName,
-        url: websiteURL,
-        category: category
-    };
-
-    // Retrieve existing bookmarks from localStorage or initialize an empty array
-    const bookmarks = JSON.parse(localStorage.getItem("bookmarks")) || [];
-    bookmarks.push(bookmark);
-
-    // Save the updated bookmarks array back to localStorage
-    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-
-    // Display the updated bookmarks
-    displayBookmarks();
-    clearForm();
-}
 
 // Function to display bookmarks
 function displayBookmarks() {
@@ -248,15 +253,4 @@ function clearForm() {
 
 // Initial display of bookmarks
 displayBookmarks();
-
-function toggleTheme() {
-    const currentTheme = document.getElementById("theme-stylesheet").getAttribute("href");
-    const themeToApply = currentTheme.includes("light.css") ? "dark.css" : "light.css";
-    
-    document.getElementById("theme-stylesheet").setAttribute("href", themeToApply);
 }
-
-// Your existing JavaScript code ...
-
-// Initial display of bookmarks
-displayBookmarks();
